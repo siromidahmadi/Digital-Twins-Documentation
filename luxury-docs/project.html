@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Luxury Documentation — Project</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <div class="logo-mark">DT</div>
+        <div class="brand-text">
+          <span class="brand-title">Digital Twins Project</span>
+          <span class="brand-sub">Documentation</span>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="team.html" class="nav-link">Team</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" id="navToggle3">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page container" id="projectDetail">
+      <h1 class="page-title" id="projectTitle">Loading… <span id="categoryBadge" style="font-size:14px;margin-left:10px;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,0.08);color:#bdbdbd"></span></h1>
+      <div id="projectError" class="card glow" style="display:none;margin-bottom:16px"></div>
+
+      <div class="card glow" id="goalCard">
+        <h2>Goal of the Project</h2>
+        <p id="goal"></p>
+      </div>
+
+      <div class="card glow" id="featuresCard" style="margin-top:16px">
+        <h2>Key Features</h2>
+        <ul id="features"></ul>
+      </div>
+
+      <div class="card glow" id="fsCard" style="margin-top:16px">
+        <h2>File Structure</h2>
+        <pre class="file-structure" id="fileStructure"></pre>
+      </div>
+
+      <div class="card glow" id="modularCard" style="margin-top:16px">
+        <h2>Modular Architecture</h2>
+        <p id="modulesText"></p>
+      </div>
+
+      <div class="card glow" id="funcCard" style="margin-top:16px">
+        <h2>Function of Each Module</h2>
+        <ul id="moduleFunctions"></ul>
+      </div>
+
+      <div class="card glow" id="problemCard" style="margin-top:16px">
+        <h2>Problem it Solves</h2>
+        <p id="problem"></p>
+      </div>
+
+      <div class="card glow" id="dataTypesCard" style="margin-top:16px">
+        <h2>Data Type it Works With</h2>
+        <ul id="dataTypes"></ul>
+      </div>
+
+      <div class="card glow" id="conclusionCard" style="margin-top:16px">
+        <h2>Conclusion</h2>
+        <p id="conclusion"></p>
+      </div>
+
+      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn btn-ghost" href="projects.html">← Back to Projects</a>
+        <a class="btn btn-primary" id="modifyBtn" href="#">Modify</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© <span id="year3"></span> Digital Twins Project — Documentation</div>
+      <div class="footer-links">
+        <a href="#">Contact</a>
+        <a href="#">License</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

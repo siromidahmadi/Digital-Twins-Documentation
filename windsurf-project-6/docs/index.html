@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Luxury Documentation — Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=3">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <div class="logo-mark">DT</div>
+        <div class="brand-text">
+          <span class="brand-title">Digital Twins Project</span>
+          <span class="brand-sub">Documentation</span>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="team.html" class="nav-link">Team</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-left">
+          <h1 class="hero-title">Goal of the Project</h1>
+          <p class="lead">
+            Build a premium, vector-enabled Earth visualization assistant — Digital Twins Project — that integrates real-time datasets,
+            AI-guided navigation and intuitive explorations of environmental features.
+          </p>
+
+          <ul class="hero-list">
+            <li>Live data feeds (wildfires, earthquakes, weather)</li>
+            <li>3D navigation & vector paths</li>
+            <li>Voice assistant & contextual guidance</li>
+          </ul>
+
+          <a class="btn btn-primary" href="features.html">Explore Features</a>
+        </div>
+
+        <aside class="hero-right" aria-label="Professors slideshow">
+          <div class="card glow" id="profSlider" style="overflow:hidden" data-mode="fade" data-interval="3000">
+            <h3 style="margin-top:0">Our Professors</h3>
+            <div class="slider">
+              <div class="slides">
+                <div class="slide">
+                  <img class="portrait" src="assets/images/Professor%20Arthur%20Modine.png" alt="Professor Arthur Modine" />
+                  <p class="prof-name">Professor Arthur Modine</p>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/Professor%20Jack%20Rendler.jpg" alt="Professor Jack Rendler" />
+                  <p class="prof-name">Professor Jack Rendler</p>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/Professor%20Marcela%20Oliva.jpg" alt="Professor Marcela Oliva" />
+                  <p class="prof-name">Professor Marcela Oliva</p>
+                </div>
+              </div>
+              <button class="slider-prev" aria-label="Previous">‹</button>
+              <button class="slider-next" aria-label="Next">›</button>
+              <div class="slider-dots"></div>
+              <div style="display:flex;justify-content:center;margin-top:10px;gap:8px">
+                <button id="addProfPhotoBtn" class="btn btn-ghost btn-icon" type="button" aria-label="Add photo" title="Add photo">➕</button>
+                <input id="addProfPhotoInput" type="file" accept="image/*" style="display:none" />
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="intro container">
+      <div class="card glow">
+        <h2>Quick Summary</h2>
+        <p>Digital Twins Project is a modular project built to visualize and navigate Earth-scale datasets. Documentation covers goals, features,
+           data types, file structure and module responsibilities — presented in a clean, luxury layout for stakeholders and developers.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> Digital Twins Project — Documentation</div>
+      <div class="footer-links">
+        <a href="#">Contact</a>
+        <a href="#">License</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

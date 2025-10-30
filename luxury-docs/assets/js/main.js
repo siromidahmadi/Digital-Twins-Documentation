@@ -266,6 +266,16 @@ document.addEventListener('DOMContentLoaded', function(){
   // Initialize slideshow on any page where it's present
   initProfSlider();
 
+  // Download PDF handler on project page
+  (function(){
+    var pdfBtn = document.getElementById('downloadPdfBtn');
+    if(pdfBtn){
+      pdfBtn.addEventListener('click', function(){
+        window.print();
+      });
+    }
+  })();
+
   // Add-photo wiring for professors slider
   (function(){
     var btn = document.getElementById('addProfPhotoBtn');

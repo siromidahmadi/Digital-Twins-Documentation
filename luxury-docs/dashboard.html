@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Digital Twins Hub - Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+    h1 { text-align: center; }
+    .chart-container { width: 80%; margin: 40px auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .project-links { text-align: center; margin-top: 20px; }
+    .project-links a { margin: 0 10px; text-decoration: none; color: #0077cc; }
+  </style>
+</head>
+<body>
+
+<h1>Projects Progress & Analytics Dashboard</h1>
+
+<div class="chart-container">
+  <canvas id="progressChart"></canvas>
+</div>
+
+<div class="chart-container">
+  <canvas id="timeChart"></canvas>
+</div>
+
+<div class="project-links" id="linksContainer"></div>
+
+<script>
+const projects = [
+  { name: "ShadeLA", progress: 65, milestones: ["Planning","Design","Integration"], timeSpent: 45, jiraLink: "https://jira-link.com/shadela" },
+  { name: "Alpha Earth", progress: 45, milestones: ["Research","Prototype"], timeSpent: 30, jiraLink: "https://jira-link.com/alphaearth" },
+  { name: "Cigna Claims App", progress: 80, milestones: ["Planning","Dev Start","QA Testing"], timeSpent: 60, jiraLink: "https://jira-link.com/cigna" }
+];
+
+// --------- Progress Bar Chart ---------
+const ctxProgress = document.getElementById('progressChart').getContext('2d');
+const progressChart = new Chart(ctxProgress, {
+    type: 'bar',
+    data: {
+        labels: projects.map(p => p.name),
+        datasets: [{
+            label: 'Project Completion (%)',
+            data: projects.map(p => p.progress),
+            backgroundColor: 'rgba(0,123,255,0.6)',
+            borderColor: 'rgba(0,123,255,1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: { y: { beginAtZero: true, max: 100 } },
+        plugins: { legend: { display: false } }
+    }
+});
+
+// --------- Time Spent Chart ---------
+const ctxTime = document.getElementById('timeChart').getContext('2d');
+const timeChart = new Chart(ctxTime, {
+    type: 'bar',
+    data: {
+        labels: projects.map(p => p.name),
+        datasets: [{
+            label: 'Time Spent (hours)',
+            data: projects.map(p => p.timeSpent),
+            backgroundColor: 'rgba(40,167,69,0.6)',
+            borderColor: 'rgba(40,167,69,1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: { y: { beginAtZero: true } },
+        plugins: { legend: { display: false } }
+    }
+});
+
+// --------- Project Links (Jira/TestLink) ---------
+const linksContainer = document.getElementById('linksContainer');
+projects.forEach(p => {
+    const link = document.createElement('a');
+    link.href = p.jiraLink;
+    link.target = "_blank";
+    link.textContent = `View ${p.name} Jira`;
+    linksContainer.appendChild(link);
+});
+</script>
+
+</body>
+</html>

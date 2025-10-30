@@ -248,6 +248,14 @@
           locals.push(proj);
         }
         setLocal(locals);
+        // Fire-and-forget save to backend API (optional). Does not block redirect.
+        try {
+          fetch('http://localhost:3000/api/save-project', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(proj)
+          }).catch(function(){ /* ignore */ });
+        } catch(e){ /* ignore */ }
         msg('ok','Saved! Redirecting…');
         setTimeout(function(){ window.location.href = 'project.html?id=' + encodeURIComponent(id); }, 600);
       });

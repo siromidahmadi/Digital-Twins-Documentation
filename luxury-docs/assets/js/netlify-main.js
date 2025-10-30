@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadProjects();
 });
 
-// Save project to MongoDB via Netlify function
+// Save project via Netlify Blobs function
 async function saveProject(projectData) {
   try {
     const res = await fetch('/.netlify/functions/saveProject', {
@@ -32,8 +32,7 @@ async function saveProject(projectData) {
       body: JSON.stringify(projectData)
     });
 
-    const data = await res.json();
-    if (data.success) {
+    if (res.ok) {
       alert('✅ Project saved successfully!');
       loadProjects();
     } else {
@@ -45,10 +44,10 @@ async function saveProject(projectData) {
   }
 }
 
-// Load projects from MongoDB
+// Load projects from Netlify Blobs
 async function loadProjects() {
   try {
-    const res = await fetch('/.netlify/functions/getProjects');
+    const res = await fetch('/.netlify/functions/saveProject');
     const projects = await res.json();
 
     const container = document.getElementById('saved-projects');
@@ -65,7 +64,7 @@ async function loadProjects() {
       div.innerHTML = `
         <h4>${p.title}</h4>
         <p>${p.description}</p>
-        <small>📅 ${new Date(p.createdAt).toLocaleString()}</small>
+        <small>📅 ${new Date(p.date || p.createdAt).toLocaleString()}</small>
         <hr>
       `;
       container.appendChild(div);

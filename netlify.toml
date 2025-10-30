@@ -1,0 +1,14 @@
+[build]
+  publish = "luxury-docs"
+  functions = "netlify/functions"
+
+[dev]
+  publish = "luxury-docs"
+  functions = "netlify/functions"
+  framework = "#static"
+
+# Optional: redirect root to index.html (static)
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200

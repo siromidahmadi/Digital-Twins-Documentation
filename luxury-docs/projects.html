@@ -3,22 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projects — Persistent Storage</title>
+  <title>Digital Twins Projects</title>
   <link rel="stylesheet" href="assets/css/style.css">
-  <style>
-    .item { background:#111; padding:12px; margin-bottom:10px; border-radius:8px; color:#fff; }
-    .item h3 { margin:0 0 6px; }
-    .item small { color:#bbb; }
-  </style>
 </head>
 <body>
   <header>
-    <h1>Saved Projects (Netlify Blobs)</h1>
+    <h1>🌍 Digital Twins Projects</h1>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="add-project.html">Add Project</a>
+    </nav>
   </header>
 
-  <main class="container">
+  <main>
     <section>
-      <div id="saved-projects"><p>Loading...</p></div>
+      <label for="categoryFilter">Filter by category:</label>
+      <select id="categoryFilter">
+        <option value="">All</option>
+        <option value="computer-science">Computer Science</option>
+        <option value="architecture">Architecture / Other Team</option>
+      </select>
+    </section>
+
+    <section id="saved-projects">
+      <p>No projects yet.</p>
     </section>
   </main>
 
@@ -28,62 +36,63 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('year').innerText = new Date().getFullYear();
+    const STORAGE_KEY = 'digitalTwinsProjects';
 
-    async function loadProjects() {
-      try {
-        const res = await fetch('/.netlify/functions/saveProject');
-        const projects = await res.json();
-        const container = document.getElementById('saved-projects');
-        container.innerHTML = '';
-
-        if (!Array.isArray(projects) || !projects.length) {
-          container.innerHTML = '<p>No projects yet.</p>';
-          return;
-        }
-
-        projects.slice().reverse().forEach((p, i) => {
-          const div = document.createElement('div');
-          div.className = 'item';
-          div.innerHTML = `
-            <h3>${p.title}</h3>
-            <p>${p.description || ''}</p>
-            <small>${p.date ? new Date(p.date).toLocaleString() : ''}</small><br>
-            <button onclick="downloadProjectPDF(${i})">📥 Download PDF</button>
-          `;
-          container.appendChild(div);
-        });
-      } catch (e) {
-        console.error(e);
-        document.getElementById('saved-projects').innerHTML = '<p>Error loading projects.</p>';
-      }
-    }
-
-    async function downloadProjectPDF(index) {
-      const res = await fetch('/.netlify/functions/saveProject');
-      const projects = await res.json();
-      const project = projects.slice().reverse()[index];
+    function downloadProjectPDF(index){
+      const projects = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const p = projects[index];
+      if(!p) return;
 
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-
-      doc.setFontSize(18);
-      doc.text('Digital Twins Project', 20, 20);
-
-      doc.setFontSize(14);
-      doc.text(`Title: ${project.title}`, 20, 40);
-
+      let y = 10;
+      doc.setFontSize(16);
+      doc.text(p.title, 10, y); y+=10;
       doc.setFontSize(12);
-      doc.text('Description:', 20, 60);
-      const descriptionLines = doc.splitTextToSize(project.description || '', 170);
-      doc.text(descriptionLines, 20, 70);
-
-      doc.setFontSize(10);
-      doc.text(`Date: ${project.date ? new Date(project.date).toLocaleString() : ''}`, 20, 120);
-
-      doc.save(`${(project.title || 'project').replace(/\s+/g, '_')}.pdf`);
+      doc.text(`Category: ${p.category}`, 10, y); y+=8;
+      doc.text(`Owner: ${p.owner}`, 10, y); y+=8;
+      doc.text('Goal: ' + p.goal, 10, y); y+=10;
+      if(p.features.length) doc.text('Features: ' + p.features.join(', '), 10, y); y+=10;
+      if(p.fileStructure) doc.text('File Structure:\n' + p.fileStructure, 10, y); y+=10;
+      if(p.modules.length){
+        doc.text('Modules:', 10, y); y+=8;
+        p.modules.forEach(m => {
+          doc.text(`${m.title} | ${m.function} | ${m.dataTypes.join(', ')} | ${m.problemSolved}`, 10, y); y+=8;
+        });
+      }
+      if(p.moduleFunctions.length) doc.text('Module Functions: ' + p.moduleFunctions.join(', '), 10, y); y+=10;
+      if(p.problem) doc.text('Problem: ' + p.problem, 10, y); y+=10;
+      if(p.dataTypes.length) doc.text('Data Types: ' + p.dataTypes.join(', '), 10, y); y+=10;
+      if(p.conclusion) doc.text('Conclusion: ' + p.conclusion, 10, y); y+=10;
+      doc.save(`${p.title}.pdf`);
     }
 
+    function loadProjects(){
+      const projects = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const filter = document.getElementById('categoryFilter').value;
+      const container = document.getElementById('saved-projects');
+      container.innerHTML = '';
+      const filtered = filter ? projects.filter(p => p.category === filter) : projects;
+      if(!filtered.length) return container.innerHTML = '<p>No projects yet for this category.</p>';
+      filtered.reverse().forEach((p, i) => {
+        const div = document.createElement('div');
+        div.style.border = '1px solid #ccc';
+        div.style.padding = '10px';
+        div.style.marginBottom = '12px';
+        div.style.borderRadius = '8px';
+        div.style.background = '#fafafa';
+        div.innerHTML = `
+          <h3>${p.title}</h3>
+          <p><strong>Goal:</strong> ${p.goal}</p>
+          <p><strong>Owner:</strong> ${p.owner}</p>
+          <button onclick="downloadProjectPDF(${projects.indexOf(p)})">📥 Download PDF</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    document.getElementById('categoryFilter').addEventListener('change', loadProjects);
     document.addEventListener('DOMContentLoaded', loadProjects);
   </script>
 </body>

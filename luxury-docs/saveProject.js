@@ -8,7 +8,7 @@ const client = new MongoClient(uri, { useUnifiedTopology: true });
 export async function saveProject(data) {
   try {
     await client.connect();
-    const db = client.db("luxury_projects");
+    const db = client.db("manodb");
     const collection = db.collection("project_entries");
     const result = await collection.insertOne({ ...data, createdAt: new Date() });
     console.log("✅ Project saved with ID:", result.insertedId);

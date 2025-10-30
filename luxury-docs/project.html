@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Digital Twins Projects</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    #saved-projects div {
+      background: #111;
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -16,7 +25,7 @@
       <h2>Create New Project</h2>
       <form id="projectForm">
         <label>Project Title</label>
-        <input type="text" id="projectTitle" placeholder="Enter project title" required />
+        <input type="text" id="projectTitle" placeholder="Enter project title" required>
 
         <label>Description</label>
         <textarea id="projectDescription" placeholder="Enter project description" required></textarea>
@@ -25,18 +34,67 @@
       </form>
     </section>
 
-    <hr />
+    <hr>
 
     <section id="saved-section">
       <h2>Saved Projects</h2>
-      <div id="saved-projects">Loading projects...</div>
+      <div id="saved-projects"><p>No projects yet. Create one above!</p></div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; <span id="year"></span> Digital Twins</p>
+    <p>© <span id="year"></span> Digital Twins</p>
   </footer>
 
-  <script src="assets/js/netlify-main.js"></script>
+  <script>
+    // Set current year
+    document.getElementById('year').innerText = new Date().getFullYear();
+
+    // Load saved projects from localStorage
+    function loadProjects() {
+      const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+      const container = document.getElementById('saved-projects');
+      container.innerHTML = '';
+      if (!projects.length) {
+        container.innerHTML = '<p>No projects yet. Create one above!</p>';
+        return;
+      }
+      projects.reverse().forEach((p, index) => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <h4>${p.title}</h4>
+          <p>${p.description}</p>
+          <button onclick="deleteProject(${index})" style="margin-top:4px;">🗑 Delete</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Save project to localStorage
+    document.getElementById('projectForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const title = document.getElementById('projectTitle').value.trim();
+      const description = document.getElementById('projectDescription').value.trim();
+      if (!title || !description) return;
+
+      const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+      projects.push({ title, description });
+      localStorage.setItem('projects', JSON.stringify(projects));
+
+      loadProjects(); // Refresh saved projects
+      e.target.reset(); // Clear form
+    });
+
+    // Delete a project
+    function deleteProject(index) {
+      const projects = JSON.parse(localStorage.getItem('projects') || '[]');
+      projects.splice(projects.length - 1 - index, 1); // reverse order
+      localStorage.setItem('projects', JSON.stringify(projects));
+      loadProjects();
+    }
+
+    // Initial load
+    loadProjects();
+  </script>
 </body>
 </html>

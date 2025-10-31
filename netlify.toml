@@ -1,14 +1,8 @@
 [build]
   publish = "luxury-docs"
-  functions = "netlify/functions"
+  command = ""
 
-[dev]
-  publish = "luxury-docs"
-  functions = "netlify/functions"
-  framework = "#static"
-
-# Optional: redirect root to index.html (static)
 [[redirects]]
-  from = "/"
+  from = "/*"
   to = "/index.html"
   status = 200

@@ -151,12 +151,20 @@
         y += line;
       }
 
+      // Normalize most whitespace to avoid per-letter spacing issues
+      function normalizeText(t){
+        return String(t || '')
+          .replace(/\r/g, '')
+          .replace(/[\u00A0\u200B\u200C\u200D]/g, ' ') // nbsp and zero-width chars
+          .replace(/[ \t]+/g, ' ');
+      }
+
       function writeParagraph(text){
         if(!text) return;
         doc.setFont('helvetica','normal');
         doc.setFontSize(11);
         doc.setTextColor(0);
-        const lines = doc.splitTextToSize(String(text), maxWidth);
+        const lines = doc.splitTextToSize(normalizeText(text), maxWidth);
         lines.forEach((ln) => {
           ensureSpace(line);
           doc.text(ln, margin, y);
@@ -175,6 +183,10 @@
         writeParagraph(Array.isArray(value) ? value.join(', ') : value);
         y += 2;
       }
+
+      // Reset spacing controls to avoid letter gaps
+      if (typeof doc.setCharSpace === 'function') doc.setCharSpace(0);
+      if (typeof doc.setLineHeightFactor === 'function') doc.setLineHeightFactor(1.15);
 
       // Title header
       writeHeading(p.title || 'Project');

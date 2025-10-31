@@ -3,47 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital Twins Projects</title>
+  <title>Digital Twins Hub — Projects</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#0c0c10; --card:#121218; --muted:#a5a7b0; --text:#e9e9ef; --primary:#c9a24a; --primary2:#9b7b2e; --border:rgba(255,255,255,0.08); --ring:rgba(201,162,74,0.35); --shadow:0 20px 50px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.03); }
+    body { margin:0; background: radial-gradient(1200px 600px at 10% -10%, rgba(201,162,74,.15), transparent 60%), radial-gradient(1000px 500px at 100% 0%, rgba(90,90,255,.08), transparent 50%), var(--bg); color:var(--text); font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+    header { position:sticky; top:0; z-index:5; background:linear-gradient(180deg, rgba(12,12,16,.9), rgba(12,12,16,.6)); backdrop-filter: blur(6px); border-bottom:1px solid var(--border); }
+    .shell { max-width:1100px; margin:0 auto; padding:18px 22px; display:flex; align-items:center; justify-content:space-between; }
+    .brand { display:flex; align-items:center; gap:12px; color:var(--text); text-decoration:none; }
+    .brand-mark { width:36px; height:36px; border-radius:12px; background:linear-gradient(135deg, var(--primary), var(--primary2)); display:grid; place-items:center; color:#0b0b0b; font-weight:700; box-shadow:var(--shadow); }
+    .brand-title { font-family:'Playfair Display',serif; font-size:1.2rem; letter-spacing:.4px; }
+    nav a { color:var(--muted); text-decoration:none; margin-left:14px; font-weight:500; }
+    nav a:hover { color:var(--text); }
+
+    main { padding:32px 22px 60px; }
+    .container { max-width:1100px; margin:0 auto; }
+    .hero { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom:18px; }
+    .hero h1 { margin:0; font-family:'Playfair Display',serif; font-size:2rem; }
+    .hint { color:var(--muted); }
+
+    .controls { display:flex; align-items:center; gap:12px; margin: 14px 0 20px; }
+    select { padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,.02); color:var(--text); outline:none; }
+    select:focus { border-color:var(--primary); box-shadow:0 0 0 4px var(--ring); }
+
+    .list { display:grid; gap:14px; }
+    .card { background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:16px 18px; }
+    .item-title { margin:0 0 6px; font-size:1.1rem; font-weight:600; color:#fff; }
+    .meta { color:var(--muted); margin:4px 0 10px; }
+    .btn { background:linear-gradient(135deg, var(--primary), var(--primary2)); border:none; color:#0b0b0b; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer; box-shadow:0 8px 24px rgba(201,162,74,.25); }
+    .btn:hover { box-shadow:0 12px 28px rgba(201,162,74,.35); }
+
+    footer { border-top:1px solid var(--border); }
+    .foot-inner { max-width:1100px; margin:0 auto; padding:18px 22px; color:var(--muted); }
+  </style>
 </head>
 <body>
   <header>
-    <h1>🌍 Digital Twins Projects</h1>
-    <nav>
-      <a href="index.html">Home</a> |
-      <a href="add-project.html">Add Project</a>
-    </nav>
+    <div class="shell">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">DH</div>
+        <div class="brand-title">Digital Twins Hub</div>
+      </a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="add-project.html">Add Project</a>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <section>
-      <label for="categoryFilter">Filter by category:</label>
-      <select id="categoryFilter">
-        <option value="">All</option>
-        <option value="computer-science">Computer Science</option>
-        <option value="architecture">Architecture / Other Team</option>
-      </select>
-    </section>
+    <div class="container">
+      <div class="hero">
+        <div>
+          <h1>Projects</h1>
+          <div class="hint">Browse saved projects and export any to PDF.</div>
+        </div>
+      </div>
 
-    <section id="saved-projects">
-      <p>No projects yet.</p>
-    </section>
+      <div class="controls">
+        <label for="categoryFilter">Filter by category:</label>
+        <select id="categoryFilter">
+          <option value="">All</option>
+          <option value="computer-science">Computer Science</option>
+          <option value="architecture">Architecture / Other Team</option>
+        </select>
+      </div>
+
+      <section id="saved-projects" class="list">
+        <p class="hint">No projects yet.</p>
+      </section>
+    </div>
   </main>
 
   <footer>
-    <p>© <span id="year"></span> Digital Twins</p>
+    <div class="foot-inner">© <span id="year"></span> Digital Twins Hub</div>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
-    document.getElementById('year').innerText = new Date().getFullYear();
+    document.getElementById('year').textContent = new Date().getFullYear();
     const STORAGE_KEY = 'digitalTwinsProjects';
 
     function downloadProjectPDF(index){
       const projects = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
       const p = projects[index];
       if(!p) return;
-
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
       let y = 10;
@@ -57,9 +102,7 @@
       if(p.fileStructure) doc.text('File Structure:\n' + p.fileStructure, 10, y); y+=10;
       if(p.modules.length){
         doc.text('Modules:', 10, y); y+=8;
-        p.modules.forEach(m => {
-          doc.text(`${m.title} | ${m.function} | ${m.dataTypes.join(', ')} | ${m.problemSolved}`, 10, y); y+=8;
-        });
+        p.modules.forEach(m => { doc.text(`${m.title} | ${m.function} | ${m.dataTypes.join(', ')} | ${m.problemSolved}`, 10, y); y+=8; });
       }
       if(p.moduleFunctions.length) doc.text('Module Functions: ' + p.moduleFunctions.join(', '), 10, y); y+=10;
       if(p.problem) doc.text('Problem: ' + p.problem, 10, y); y+=10;
@@ -68,28 +111,26 @@
       doc.save(`${p.title}.pdf`);
     }
 
+    function renderItem(p, index, sourceArray){
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <h3 class="item-title">${p.title}</h3>
+        <div class="meta">${p.category || 'Uncategorized'} • ${p.owner || 'Unknown owner'}</div>
+        <p style="margin:8px 0 12px">${p.goal || ''}</p>
+        <button class="btn" onclick="downloadProjectPDF(${index})">📥 Download PDF</button>
+      `;
+      return card;
+    }
+
     function loadProjects(){
       const projects = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
       const filter = document.getElementById('categoryFilter').value;
       const container = document.getElementById('saved-projects');
       container.innerHTML = '';
       const filtered = filter ? projects.filter(p => p.category === filter) : projects;
-      if(!filtered.length) return container.innerHTML = '<p>No projects yet for this category.</p>';
-      filtered.reverse().forEach((p, i) => {
-        const div = document.createElement('div');
-        div.style.border = '1px solid #ccc';
-        div.style.padding = '10px';
-        div.style.marginBottom = '12px';
-        div.style.borderRadius = '8px';
-        div.style.background = '#fafafa';
-        div.innerHTML = `
-          <h3>${p.title}</h3>
-          <p><strong>Goal:</strong> ${p.goal}</p>
-          <p><strong>Owner:</strong> ${p.owner}</p>
-          <button onclick="downloadProjectPDF(${projects.indexOf(p)})">📥 Download PDF</button>
-        `;
-        container.appendChild(div);
-      });
+      if(!filtered.length){ container.innerHTML = '<p class="hint">No projects yet for this category.</p>'; return; }
+      filtered.slice().reverse().forEach((p, i) => container.appendChild(renderItem(p, projects.indexOf(p), projects)));
     }
 
     document.getElementById('categoryFilter').addEventListener('change', loadProjects);

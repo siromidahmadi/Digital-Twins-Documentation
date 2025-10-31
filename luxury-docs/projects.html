@@ -23,9 +23,11 @@
     .hero h1 { margin:0; font-family:'Playfair Display',serif; font-size:2rem; }
     .hint { color:var(--muted); }
 
-    .controls { display:flex; align-items:center; gap:12px; margin: 14px 0 20px; }
-    select { padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,.02); color:var(--text); outline:none; }
-    select:focus { border-color:var(--primary); box-shadow:0 0 0 4px var(--ring); }
+    .controls { margin: 14px 0 20px; }
+    .tabs { display:flex; gap:10px; flex-wrap:wrap; }
+    .tab { padding:10px 14px; border-radius:12px; border:1px solid var(--border); background:rgba(255,255,255,.02); color:var(--muted); cursor:pointer; font-weight:600; }
+    .tab:hover { color:var(--text); border-color:var(--primary); box-shadow:0 0 0 3px var(--ring); }
+    .tab.active { color:#0b0b0b; background:linear-gradient(135deg, var(--primary), var(--primary2)); border-color:transparent; box-shadow:0 8px 24px rgba(201,162,74,.25); }
 
     .list { display:grid; gap:14px; }
     .card { background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:16px 18px; }
@@ -62,12 +64,11 @@
       </div>
 
       <div class="controls">
-        <label for="categoryFilter">Filter by category:</label>
-        <select id="categoryFilter">
-          <option value="">All</option>
-          <option value="computer-science">Computer Science</option>
-          <option value="architecture">Architecture / Other Team</option>
-        </select>
+        <div class="tabs" id="categoryTabs">
+          <button class="tab active" data-filter="">All</button>
+          <button class="tab" data-filter="computer-science">Computer Science</button>
+          <button class="tab" data-filter="architecture">Architecture / Other Team</button>
+        </div>
       </div>
 
       <section id="saved-projects" class="list">
@@ -84,6 +85,7 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
     const STORAGE_KEY = 'digitalTwinsProjects';
+    let currentFilter = '';
 
     function downloadProjectPDF(index){
       const projects = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
@@ -125,16 +127,26 @@
 
     function loadProjects(){
       const projects = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      const filter = document.getElementById('categoryFilter').value;
       const container = document.getElementById('saved-projects');
       container.innerHTML = '';
-      const filtered = filter ? projects.filter(p => p.category === filter) : projects;
+      const filtered = currentFilter ? projects.filter(p => p.category === currentFilter) : projects;
       if(!filtered.length){ container.innerHTML = '<p class="hint">No projects yet for this category.</p>'; return; }
       filtered.slice().reverse().forEach((p, i) => container.appendChild(renderItem(p, projects.indexOf(p), projects)));
     }
 
-    document.getElementById('categoryFilter').addEventListener('change', loadProjects);
-    document.addEventListener('DOMContentLoaded', loadProjects);
+    function setupTabs(){
+      const tabs = document.querySelectorAll('#categoryTabs .tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentFilter = tab.getAttribute('data-filter') || '';
+          loadProjects();
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => { setupTabs(); loadProjects(); });
   </script>
 </body>
 </html>

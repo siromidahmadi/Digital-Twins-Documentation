@@ -1,63 +1,149 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Luxury Documentation — Team</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet the Team — Digital Twins Hub</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    body { background:#0c0c10; color:#e9e9ef; font-family:'Poppins', sans-serif; }
+    header { padding:18px 22px; border-bottom:1px solid rgba(255,255,255,.08); position:sticky; top:0; background:linear-gradient(180deg, rgba(12,12,16,.9), rgba(12,12,16,.6)); backdrop-filter:blur(6px); }
+    .shell { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
+    .brand { display:flex; align-items:center; gap:12px; text-decoration:none; color:#e9e9ef; }
+    .brand-mark { width:36px; height:36px; border-radius:12px; background:linear-gradient(135deg, #c9a24a, #9b7b2e); display:grid; place-items:center; color:#0b0b0b; font-weight:700; }
+    nav a { color:#a5a7b0; margin-left:14px; text-decoration:none; font-weight:500; }
+    nav a:hover { color:#fff; }
+    main { padding:30px 22px 60px; }
+    .container { max-width:1100px; margin:0 auto; }
+    #teamCards { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .team-card { background:#0b0b0b; color:#fff; padding:16px; border-radius:12px; text-align:center; box-shadow:0 0 10px rgba(201,162,74,0.2); }
+    .team-card img { width:100px; height:100px; object-fit:cover; border-radius:50%; margin-bottom:10px; }
+    input, textarea { width:100%; padding:10px 12px; margin-bottom:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.1); background:#111; color:#fff; }
+    button { padding:10px 16px; border:none; border-radius:10px; cursor:pointer; background:#c9a24a; color:#000; font-weight:700; }
+    footer { border-top:1px solid rgba(255,255,255,.08); }
+    .foot-inner { max-width:1100px; margin:0 auto; padding:18px 22px; color:#a5a7b0; }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="brand">
-        <div class="logo-mark">DT</div>
-        <div class="brand-text">
-          <span class="brand-title">Digital Twins Project</span>
-          <span class="brand-sub">Documentation</span>
-        </div>
+  <header>
+    <div class="shell">
+      <a class="brand" href="index.html">
+        <div class="brand-mark">DH</div>
+        <div>Digital Twins Hub</div>
       </a>
-
-      <nav class="nav">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="team.html" class="nav-link active">Team</a>
-        <a href="contact.html" class="nav-link">Contact</a>
+      <nav>
+        <a href="index.html">Home</a> 
+        <a href="projects.html">Projects</a> 
+        <a href="team.html">Meet the Team</a>
       </nav>
-
-      <button class="nav-toggle" aria-label="Toggle navigation" id="navToggle2">
-        <span></span><span></span><span></span>
-      </button>
     </div>
   </header>
 
   <main>
-    <section class="page container">
-      <h1 class="page-title">Team</h1>
-      <p class="lead">Explore projects by team focus. Choose a category below.</p>
+    <div class="container">
+      <section id="create-team-member" class="card glow" style="background:transparent;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;margin-bottom:18px">
+        <h2 style="margin-top:0">Add Team Member</h2>
+        <form id="teamForm">
+          <label>Name</label>
+          <input type="text" id="memberName" placeholder="Enter name" required>
 
-      <div class="grid-2" style="margin-top:16px">
-        <a class="card glow" href="projects.html?category=computer-science" style="text-decoration:none;color:inherit">
-          <h2 style="margin-top:0">Computer Science</h2>
-          <p class="lead">Software, data, AI, visualization.</p>
-        </a>
-        <a class="card glow" href="projects.html?category=architecture" style="text-decoration:none;color:inherit">
-          <h2 style="margin-top:0">Architecture</h2>
-          <p class="lead">Systems, structures, planning, urbanism.</p>
-        </a>
-      </div>
-    </section>
+          <label>Role</label>
+          <input type="text" id="memberRole" placeholder="e.g., Software Engineer" required>
+
+          <label>Email</label>
+          <input type="email" id="memberEmail" placeholder="Enter email" required>
+
+          <label>LinkedIn</label>
+          <input type="url" id="memberLinkedIn" placeholder="https://linkedin.com/in/...">
+
+          <label>Project</label>
+          <input type="text" id="memberProject" placeholder="Which project?">
+
+          <label>Upload Photo</label>
+          <input type="file" id="memberPhoto" accept="image/*">
+
+          <button type="submit">💾 Save Member</button>
+        </form>
+      </section>
+
+      <section id="teamList">
+        <h2>👥 Meet the Team</h2>
+        <div id="teamCards">
+          <p>No team members yet. Add someone above!</p>
+        </div>
+      </section>
+    </div>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div>© <span id="year2"></span> Digital Twins Project — Documentation</div>
-      <div class="footer-links">
-        <a href="#">Contact</a>
-        <a href="#">License</a>
-      </div>
-    </div>
+  <footer>
+    <div class="foot-inner">© <span id="year"></span> Digital Twins Hub</div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const form = document.getElementById('teamForm');
+    const cardsContainer = document.getElementById('teamCards');
+
+    function getTeam() {
+      return JSON.parse(localStorage.getItem('teamMembers') || '[]');
+    }
+
+    function saveTeam(team) {
+      localStorage.setItem('teamMembers', JSON.stringify(team));
+    }
+
+    function renderTeam() {
+      const team = getTeam();
+      if (!team.length) {
+        cardsContainer.innerHTML = '<p>No team members yet. Add someone above!</p>';
+        return;
+      }
+      cardsContainer.innerHTML = team.map(member => `
+        <div class="team-card">
+          <img src="${member.photo || 'https://via.placeholder.com/100'}" alt="${member.name}">
+          <h3>${member.name}</h3>
+          <p><strong>${member.role}</strong></p>
+          <p>${member.email}</p>
+          ${member.linkedIn ? `<p><a href="${member.linkedIn}" target="_blank">LinkedIn</a></p>` : ''}
+          ${member.project ? `<p>Project: ${member.project}</p>` : ''}
+        </div>
+      `).join('');
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const name = document.getElementById('memberName').value.trim();
+      const role = document.getElementById('memberRole').value.trim();
+      const email = document.getElementById('memberEmail').value.trim();
+      const linkedIn = document.getElementById('memberLinkedIn').value.trim();
+      const project = document.getElementById('memberProject').value.trim();
+      const photoInput = document.getElementById('memberPhoto');
+
+      if (!name || !role || !email) return alert('Name, Role and Email are required.');
+
+      const reader = new FileReader();
+      reader.onload = function() {
+        const photo = reader.result;
+        const team = getTeam();
+        team.push({ name, role, email, linkedIn, project, photo });
+        saveTeam(team);
+        renderTeam();
+        form.reset();
+      }
+
+      if (photoInput.files[0]) {
+        reader.readAsDataURL(photoInput.files[0]);
+      } else {
+        const team = getTeam();
+        team.push({ name, role, email, linkedIn, project, photo: null });
+        saveTeam(team);
+        renderTeam();
+        form.reset();
+      }
+    });
+
+    renderTeam();
+  </script>
 </body>
 </html>

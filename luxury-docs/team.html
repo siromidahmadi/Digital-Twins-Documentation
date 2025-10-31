@@ -42,7 +42,14 @@
 
   <main>
     <div class="container">
-      <section id="create-team-member" class="card glow" style="background:transparent;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;margin-bottom:18px">
+      <section id="teamList" style="margin-bottom:18px">
+        <h2>👥 Meet the Team</h2>
+        <div id="teamCards">
+          <p>No team members yet. Add someone below!</p>
+        </div>
+      </section>
+
+      <section id="create-team-member" class="card glow" style="background:transparent;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px">
         <h2 style="margin-top:0">Add Team Member</h2>
         <form id="teamForm">
           <label>Name</label>
@@ -65,13 +72,6 @@
 
           <button type="submit">💾 Save Member</button>
         </form>
-      </section>
-
-      <section id="teamList">
-        <h2>👥 Meet the Team</h2>
-        <div id="teamCards">
-          <p>No team members yet. Add someone above!</p>
-        </div>
       </section>
     </div>
   </main>

@@ -95,26 +95,121 @@
       const projects = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
       const p = projects[index];
       if(!p) return;
+
       const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      let y = 10;
-      doc.setFontSize(16);
-      doc.text(p.title, 10, y); y+=10;
-      doc.setFontSize(12);
-      doc.text(`Category: ${p.category}`, 10, y); y+=8;
-      doc.text(`Owner: ${p.owner}`, 10, y); y+=8;
-      doc.text('Goal: ' + p.goal, 10, y); y+=10;
-      if(p.features.length) doc.text('Features: ' + p.features.join(', '), 10, y); y+=10;
-      if(p.fileStructure) doc.text('File Structure:\n' + p.fileStructure, 10, y); y+=10;
-      if(p.modules.length){
-        doc.text('Modules:', 10, y); y+=8;
-        p.modules.forEach(m => { doc.text(`${m.title} | ${m.function} | ${m.dataTypes.join(', ')} | ${m.problemSolved}`, 10, y); y+=8; });
+      const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const margin = 15;
+      const maxWidth = pageWidth - margin * 2;
+      const line = 6; // line height
+      let y = margin + 12; // leave room for header
+
+      function decoratePages(){
+        const pageCount = doc.getNumberOfPages();
+        for(let i=1;i<=pageCount;i++){
+          doc.setPage(i);
+          // Header brand
+          doc.setDrawColor(201,162,74);
+          doc.setLineWidth(0.6);
+          doc.line(margin, 14, pageWidth - margin, 14);
+          doc.setFont('helvetica','bold');
+          doc.setFontSize(11);
+          doc.setTextColor(0);
+          doc.text('Digital Twins Hub', margin, 11);
+
+          // Footer page numbers
+          doc.setFont('helvetica','normal');
+          doc.setFontSize(9);
+          doc.setTextColor(120);
+          doc.text(`Page ${i} of ${pageCount}`, pageWidth/2, pageHeight - 8, { align: 'center' });
+        }
       }
-      if(p.moduleFunctions.length) doc.text('Module Functions: ' + p.moduleFunctions.join(', '), 10, y); y+=10;
-      if(p.problem) doc.text('Problem: ' + p.problem, 10, y); y+=10;
-      if(p.dataTypes.length) doc.text('Data Types: ' + p.dataTypes.join(', '), 10, y); y+=10;
-      if(p.conclusion) doc.text('Conclusion: ' + p.conclusion, 10, y); y+=10;
-      doc.save(`${p.title}.pdf`);
+
+      function ensureSpace(needed){
+        if(y + needed > pageHeight - margin){
+          doc.addPage();
+          y = margin;
+        }
+      }
+
+      function writeHeading(text){
+        ensureSpace(line*2);
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(18);
+        doc.setTextColor(0);
+        doc.text(text, margin, y);
+        y += line * 1.5;
+      }
+
+      function writeSubheading(text){
+        ensureSpace(line*1.5);
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(13);
+        doc.setTextColor(40,40,40);
+        doc.text(text, margin, y);
+        y += line;
+      }
+
+      function writeParagraph(text){
+        if(!text) return;
+        doc.setFont('helvetica','normal');
+        doc.setFontSize(11);
+        doc.setTextColor(0);
+        const lines = doc.splitTextToSize(String(text), maxWidth);
+        lines.forEach((ln) => {
+          ensureSpace(line);
+          doc.text(ln, margin, y);
+          y += line;
+        });
+      }
+
+      function writeField(label, value){
+        if(!value || (Array.isArray(value) && !value.length)) return;
+        ensureSpace(line*1.5);
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(12);
+        doc.setTextColor(0);
+        doc.text(label, margin, y);
+        y += line;
+        writeParagraph(Array.isArray(value) ? value.join(', ') : value);
+        y += 2;
+      }
+
+      // Title header
+      writeHeading(p.title || 'Project');
+      doc.setFont('helvetica','normal');
+      doc.setFontSize(10);
+      doc.setTextColor(90);
+      doc.text(`${p.category || 'Uncategorized'} • ${p.owner || 'Unknown owner'} • ${p.date ? new Date(p.date).toLocaleString() : ''}`, margin, y);
+      y += line;
+      doc.setDrawColor(220);
+      doc.line(margin, y, pageWidth - margin, y);
+      y += 4;
+
+      // Sections
+      writeSubheading('Goal');
+      writeParagraph(p.goal);
+
+      writeField('Key Features', p.features);
+      writeField('File Structure', p.fileStructure);
+
+      if(Array.isArray(p.modules) && p.modules.length){
+        writeSubheading('Modules');
+        p.modules.forEach((m) => {
+          const lineText = `• ${m.title}${m.function ? ' — ' + m.function : ''}${(m.dataTypes && m.dataTypes.length) ? ' [' + m.dataTypes.join(', ') + ']' : ''}${m.problemSolved ? ' — ' + m.problemSolved : ''}`;
+          writeParagraph(lineText);
+        });
+        y += 2;
+      }
+
+      writeField('Module Functions', p.moduleFunctions);
+      writeField('Problem it Solves', p.problem);
+      writeField('Data Types', p.dataTypes);
+      writeField('Conclusion', p.conclusion);
+
+      decoratePages();
+      doc.save(`${(p.title || 'project').replace(/\s+/g,'_')}.pdf`);
     }
 
     function renderItem(p, index, sourceArray){

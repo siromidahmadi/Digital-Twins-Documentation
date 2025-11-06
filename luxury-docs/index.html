@@ -5,28 +5,79 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Luxury Documentation — Home</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=4">
+  <link rel="stylesheet" href="assets/css/style.css?v=3">
 </head>
-<body class="light-page">
-  <header class="topbar">
-    <div class="container-xl topbar-inner">
-      <div class="brand-text">Digital Twins</div>
-      <nav class="nav-links">
-        <a href="projects.html">Projects</a>
-        <a href="team.html">Team</a>
-        <a href="contact.html">Contact</a>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <div class="logo-mark">DH</div>
+        <div class="brand-text">
+          <span class="brand-title">Digital Twins Hub</span>
+          <span class="brand-sub">Documentation</span>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="team.html" class="nav-link">Meet the Team</a>
+        <a href="contact.html" class="nav-link">Contact</a>
       </nav>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
   <main>
-    <section class="hero-light">
-      <div class="container-xl">
-        <h1 class="display-xl">Welcome to Digital Twins Projects Hub</h1>
-        <p class="lead-lg">a collaborative space where innovators, researchers, and students can create, showcase, and track projects from any discipline.</p>
-        <div class="cta-row">
-          <a href="projects.html" class="btn-elevated-dark">Explore Projects</a>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-left">
+          <h1 class="hero-title">Welcome to the Project Hub</h1>
+          <p class="lead">
+            This platform is a collaborative space where innovators, researchers, and students can create, showcase, and track projects from any discipline. Whether it’s a software application, an AI experiment, a 3D architectural model, or a data-driven research study, users can add their projects, assign contributors, and monitor progress in real time. Explore ongoing work, learn from others, and contribute to exciting ideas across fields — all in one interactive and user-friendly environment.
+          </p>
+
+          <ul class="hero-list">
+            <li><strong>Collaboration Across Teams:</strong> Work with professors, peers, and contributors from anywhere.</li>
+            <li><strong>Dynamic Project Tracking:</strong> Monitor progress, stages, and milestones visually.</li>
+            <li><strong>Flexible Content Types:</strong> Include code, diagrams, 3D models, datasets, or multimedia.</li>
+            <li><strong>Interactive Exploration:</strong> Browse projects, view contributors, and track updates on a modern dashboard.</li>
+          </ul>
+
+          <a class="btn btn-primary" href="features.html">Explore Features</a>
         </div>
+
+        <aside class="hero-right" aria-label="Professors slideshow">
+          <div class="card glow" id="profSlider" style="overflow:hidden" data-mode="fade" data-interval="3000">
+            <h3 style="margin-top:0">Our Professors</h3>
+            <div class="slider">
+              <div class="slides">
+                <div class="slide">
+                  <img class="portrait" src="assets/images/Professor%20Arthur%20Modine.png" alt="Professor Arthur Modine" />
+                  <p class="prof-name">Professor Arthur Modine</p>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/Professor%20Jack%20Rendler.jpg" alt="Professor Jack Rendler" />
+                  <p class="prof-name">Professor Jack Rendler</p>
+                </div>
+                <div class="slide">
+                  <img src="assets/images/Professor%20Marcela%20Oliva.jpg" alt="Professor Marcela Oliva" />
+                  <p class="prof-name">Professor Marcela Oliva</p>
+                </div>
+              </div>
+              <button class="slider-prev" aria-label="Previous">‹</button>
+              <button class="slider-next" aria-label="Next">›</button>
+              <div class="slider-dots"></div>
+              <div style="display:flex;justify-content:center;margin-top:10px;gap:8px">
+                <button id="addProfPhotoBtn" class="btn btn-ghost btn-icon" type="button" aria-label="Add photo" title="Add photo">➕</button>
+                <input id="addProfPhotoInput" type="file" accept="image/*" style="display:none" />
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 

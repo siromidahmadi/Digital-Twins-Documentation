@@ -242,3 +242,77 @@ body{
     transform: translateY(0);
   }
 }
+
+/* ===================== */
+/* Light theme overrides */
+/* Scoped to body.light-page */
+body.light-page{
+  background:#DFDFDF !important;
+  color:#000;
+  font-family:'Poppins',system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;
+}
+
+body.light-page header{
+  background:#EFEFEF;
+  box-shadow:0 2px 20px rgba(0,0,0,0.25);
+}
+
+body.light-page header h1{
+  font-family:'Inter',sans-serif;
+  font-weight:700;
+  font-size:40px;
+  line-height:48px;
+  color:#000;
+  margin:0;
+  padding:44px 66px;
+}
+
+/* Typography helpers from mock */
+body.light-page .display-xl{
+  font-family:'Inter',sans-serif;
+  font-weight:400;
+  font-size:96px;
+  line-height:116px;
+  color:#000;
+}
+body.light-page .lead-lg{
+  font-family:'Poppins',sans-serif;
+  font-weight:400;
+  font-size:32px;
+  line-height:48px;
+  color:rgba(0,0,0,0.6);
+}
+
+/* Utilities */
+body.light-page .text-muted{color:rgba(0,0,0,0.6)}
+body.light-page .container-xl{max-width:1200px;margin:0 auto;padding:32px 24px}
+body.light-page .section-dark{background:#030303;color:#fff}
+body.light-page .glass-panel{
+  background:rgba(255,255,255,0.46);
+  backdrop-filter:blur(1px);
+  border-radius:24px;
+  box-shadow:inset 0 1px 2px #fff, inset 0 0 10px rgba(255,255,255,0.8);
+}
+
+/* Button similar to Explore Projects */
+.btn-elevated-dark{
+  display:inline-block;text-decoration:none;
+  background:#010101;color:#fff;border-radius:30px;
+  padding:12px 28px;font-family:'Poppins',sans-serif;font-weight:400;
+  font-size:24px;line-height:36px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.25);
+}
+
+/* Topbar header and nav */
+body.light-page .topbar{background:#EFEFEF;box-shadow:0 2px 20px rgba(0,0,0,0.25);position:sticky;top:0;z-index:10}
+body.light-page .topbar-inner{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+body.light-page .brand-text{font-family:'Inter',sans-serif;font-weight:700;font-size:24px;color:#000}
+body.light-page .nav-links{display:flex;gap:24px}
+body.light-page .nav-links a{color:#000;text-decoration:none;font-family:'Poppins',sans-serif;font-weight:400;font-size:16px;padding:8px 12px;border-radius:12px}
+body.light-page .nav-links a:hover{background:rgba(0,0,0,0.05)}
+
+/* Hero section */
+.hero-light{padding:56px 0}
+.hero-light .display-xl{margin:0 0 12px}
+.hero-light .lead-lg{max-width:920px;margin:0 0 20px}
+.cta-row{display:flex;gap:12px;align-items:center}
